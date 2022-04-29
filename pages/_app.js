@@ -1,4 +1,7 @@
 import React from "react";
+import { ThemeProvider } from '@mui/material/styles';
+import theme from "../theme/theme";
+import authProvider from "../context/authContext";
 
 function GlobalStyle() {
    return (
@@ -34,8 +37,12 @@ function GlobalStyle() {
 export default function CustomApp({ Component, pageProps }) {
    return (
       <>
-         <GlobalStyle />
-         <Component {...pageProps} />
+         
+         <ThemeProvider theme={theme}>   
+            <GlobalStyle />
+            <Component {...pageProps} />
+         </ThemeProvider>
+         
       </>
    );
 }
