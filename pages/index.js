@@ -11,14 +11,15 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { firebase, auth } from "../../SapoForum/pages/firebase/firebase";
+import { useRouter } from "next/router";
 
-export default function PaginaInicial() {
+export default function PaginaInicial(props) {
    const [email, setEmail] = useState();
    const [senha, setSenha] = useState();
    const [nomeCadrastro, setNomeCadastro] = useState();
    const [emailCadastro, setEmailCadastro] = useState();
    const [senhaCadastro, setSenhaCadastro] = useState();
-
+   const roteamento = useRouter()
    const handleLogin = async () => {
       firebase.auth().signInWithEmailAndPassword(email,senha);
    };
@@ -43,12 +44,23 @@ export default function PaginaInicial() {
       const result = await auth.signInWithPopup(provider);
    };
 
-   useEffect()
+   useEffect(()=>{
+      firebase.auth().onAuthStateChanged((user)=>{
+         if(user){
+            const {displayName, photoURL}= user
+            props.setUsuario({
+               nome: displayName,
+               avatar: photoURL
+            })
+            roteamento.push("/topicos")
+         }
+      })
+   })
 
    return (
       <>
          <Head>
-            <title>Sapo Forum</title>
+            <title>SapoForum</title>
             <meta charSet="utf-8" />
          </Head>
          <Layout>

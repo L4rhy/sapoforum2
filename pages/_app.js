@@ -1,7 +1,6 @@
-import React from "react";
-import { ThemeProvider } from '@mui/material/styles';
+import React, { useState } from "react";
+import { ThemeProvider } from "@mui/material/styles";
 import theme from "../theme/theme";
-import authProvider from "../context/authContext";
 
 function GlobalStyle() {
    return (
@@ -35,14 +34,21 @@ function GlobalStyle() {
 }
 
 export default function CustomApp({ Component, pageProps }) {
+   const [usuario, setUsuario] = useState({
+      nome: "",
+      avatar: "",
+   });
+
    return (
       <>
-         
-         <ThemeProvider theme={theme}>   
+         <ThemeProvider theme={theme}>
             <GlobalStyle />
-            <Component {...pageProps} />
+            <Component
+               setUsuario={ setUsuario }
+               usuario={ usuario }
+               {...pageProps}
+            />
          </ThemeProvider>
-         
       </>
    );
 }
