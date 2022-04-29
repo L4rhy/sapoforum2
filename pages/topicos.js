@@ -4,6 +4,7 @@ import Head from "next/head"
 import { Stack } from "@mui/material"
 import { Button } from "@mui/material"
 import { useRouter } from "next/router"
+import appConfig from "../config.json"
 export default function Topicos(props){
    const roteamento = useRouter();
    console.log(props.usuario)
