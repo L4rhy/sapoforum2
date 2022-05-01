@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Layout from "../layouts/layout";
@@ -37,10 +38,12 @@ export default function PaginaInicial(props) {
    };
    const handleGoogle = async () => {
       const provider = new firebase.auth.GoogleAuthProvider();
+      // eslint-disable-next-line no-unused-vars
       const result = await auth.signInWithPopup(provider);
    };
    const handleGit = async () => {
       const provider = new firebase.auth.GithubAuthProvider();
+      // eslint-disable-next-line no-unused-vars
       const result = await auth.signInWithPopup(provider);
    };
 
