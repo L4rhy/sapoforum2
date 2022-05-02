@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack"
 import  Grid from "@mui/material/Grid";
 import Image, { Button, TextField } from "@mui/material"
 import useRouter from "next/router"
-import { firebase } from "../../SapoForum/pages/firebase/firebase";
+import { firebase } from "../service/firebase";
 import appConfig from "../config.json"
 import connect from "react-redux"
 

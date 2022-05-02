@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import appConfig from "../config.json";
 import { Grid } from "@mui/material";
 import { Image } from "@mui/icons-material";
-import { firebase } from "../../SapoForum/pages/firebase/firebase";
+import { firebase } from "../service/firebase";
 import { connect } from "react-redux";
 const Topicos = (usuario) => {
    const roteamento = useRouter();

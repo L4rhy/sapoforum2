@@ -10,7 +10,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import { firebase, auth } from "../../SapoForum/pages/firebase/firebase";
+import { firebase, auth } from "../service/firebase";
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
 
