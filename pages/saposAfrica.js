@@ -8,7 +8,6 @@ import useRouter from "next/router"
 import { firebase } from "../../SapoForum/pages/firebase/firebase";
 import appConfig from "../config.json"
 import connect from "react-redux"
-import { TextFields } from "@mui/icons-material";
 
 const PaginaSaposAfrica = (usuario) => {
    const [titulo, setTitulo]=useState()
@@ -73,7 +72,17 @@ const PaginaSaposAfrica = (usuario) => {
                         setTitulo(valor);
                      }}
                   />
-                  <TextField/>
+                  <TextField
+                     id="texto"
+                     label="Insira o Texto da postagem"
+                     variant="filled"
+                     margin="normal"
+                     value={texto}
+                     onChange={(event) => {
+                        const valor = event.target.value;
+                        setTexto(valor);
+                     }}
+                  />
                </Grid>
             </Stack>
          </Layout>
