@@ -13,28 +13,31 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { firebase, auth } from "../../SapoForum/pages/firebase/firebase";
 import { useRouter } from "next/router";
+import { connect } from "react-redux";
 
-export default function PaginaInicial(props) {
+const PaginaInicial = ({usuario, dispatch}) => {
    const [email, setEmail] = useState();
    const [senha, setSenha] = useState();
    const [nomeCadrastro, setNomeCadastro] = useState();
    const [emailCadastro, setEmailCadastro] = useState();
    const [senhaCadastro, setSenhaCadastro] = useState();
-   const roteamento = useRouter()
+   const roteamento = useRouter();
    const handleLogin = async () => {
-      firebase.auth().signInWithEmailAndPassword(email,senha);
+      firebase.auth().signInWithEmailAndPassword(email, senha);
    };
    const handleCadastro = async () => {
-      firebase.auth().createUserWithEmailAndPassword(emailCadastro, senhaCadastro)
-         
-      firebase.auth().signInWithEmailAndPassword(emailCadastro, senhaCadastro)
-         
-      const user =firebase.auth().currentUser
+      firebase
+         .auth()
+         .createUserWithEmailAndPassword(emailCadastro, senhaCadastro);
+
+      firebase.auth().signInWithEmailAndPassword(emailCadastro, senhaCadastro);
+
+      const user = firebase.auth().currentUser;
       user.updateProfile({
-         displayName : nomeCadrastro,
-         photoURL : "https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn.pixabay.com%2Fphoto%2F2015%2F10%2F05%2F22%2F37%2Fblank-profile-picture-973460_640.png&imgrefurl=https%3A%2F%2Fpixabay.com%2Fpt%2Fvectors%2Ffoto-de-perfil-em-branco-973460%2F&tbnid=ScRGRFGMiXHWfM&vet=12ahUKEwjs67_FtrL3AhUTMLkGHaAmDn0QMygAegQIARBG..i&docid=CaqOTE768pk6hM&w=640&h=640&q=foto%20usuario%20vazia&client=opera-gx&ved=2ahUKEwjs67_FtrL3AhUTMLkGHaAmDn0QMygAegQIARBG"
-      })
-         
+         displayName: nomeCadrastro,
+         photoURL:
+            "https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn.pixabay.com%2Fphoto%2F2015%2F10%2F05%2F22%2F37%2Fblank-profile-picture-973460_640.png&imgrefurl=https%3A%2F%2Fpixabay.com%2Fpt%2Fvectors%2Ffoto-de-perfil-em-branco-973460%2F&tbnid=ScRGRFGMiXHWfM&vet=12ahUKEwjs67_FtrL3AhUTMLkGHaAmDn0QMygAegQIARBG..i&docid=CaqOTE768pk6hM&w=640&h=640&q=foto%20usuario%20vazia&client=opera-gx&ved=2ahUKEwjs67_FtrL3AhUTMLkGHaAmDn0QMygAegQIARBG",
+      });
    };
    const handleGoogle = async () => {
       const provider = new firebase.auth.GoogleAuthProvider();
@@ -47,18 +50,26 @@ export default function PaginaInicial(props) {
       const result = await auth.signInWithPopup(provider);
    };
 
-   useEffect(()=>{
-      firebase.auth().onAuthStateChanged((user)=>{
-         if(user){
-            const {displayName, photoURL}= user
-            props.setUsuario({
-               nome: displayName,
-               avatar: photoURL
-            })
-            roteamento.push("/topicos")
+   const atualizarUsuario = (nome, avatar, estado) => {
+      return {
+         type: "atualizarUsuario",
+         nome,
+         avatar,
+         estado,
+      };
+   };
+
+   useEffect(() => {
+      firebase.auth().onAuthStateChanged((user) => {
+         if (user) {
+            const { displayName, photoURL } = user;
+            console.log(usuario);
+            dispatch(atualizarUsuario(displayName, photoURL, true));
+            console.log(usuario);
+            roteamento.push("/topicos");
          }
-      })
-   })
+      });
+   });
 
    return (
       <>
@@ -187,4 +198,5 @@ export default function PaginaInicial(props) {
          </Layout>
       </>
    );
-}
+};
+export default connect((state) => ({ usuario: state }))(PaginaInicial);

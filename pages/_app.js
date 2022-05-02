@@ -1,6 +1,9 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../theme/theme";
+import { Provider } from "react-redux";
+import store from "../store/index"
 
 function GlobalStyle() {
    return (
@@ -41,14 +44,16 @@ export default function CustomApp({ Component, pageProps }) {
 
    return (
       <>
-         <ThemeProvider theme={theme}>
-            <GlobalStyle />
-            <Component
-               setUsuario={ setUsuario }
-               usuario={ usuario }
-               {...pageProps}
-            />
-         </ThemeProvider>
+         <Provider store={store}>
+            <ThemeProvider theme={theme}>
+               <GlobalStyle />
+               <Component
+                  setUsuario={setUsuario}
+                  usuario={usuario}
+                  {...pageProps}
+               />
+            </ThemeProvider>
+         </Provider>
       </>
    );
 }

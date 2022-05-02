@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Layout from "../layouts/layout";
 import Head from "next/head";
 import Stack from "@mui/material/Stack"
@@ -7,16 +7,21 @@ import Image, { Button } from "@mui/material"
 import useRouter from "next/router"
 import { firebase } from "../../SapoForum/pages/firebase/firebase";
 import appConfig from "../config.json"
+import connect from "react-redux"
 
-export default function PaginaSaposAfrica(props){
-   console.log(props.usuario)
+const PaginaSaposAfrica = (usuario) => {
+   
    const roteamento = useRouter()
    
    const handleLogout = ()=>{
       firebase.auth().signOut()
       roteamento.push("/")
    }
-
+   useEffect(()=>{
+      if(usuario.estado==false){
+         handleLogout
+      }
+   })
    return(
       <>
          <Head>
@@ -40,12 +45,12 @@ export default function PaginaSaposAfrica(props){
                   <Image
                      width="16px"
                      height="16px"
-                     src={props.usuario.avatar}
+                     src={usuario.avatar}
                   >
 
                   </Image>
                   <h3>
-                     {props.usuario.nome}
+                     {usuario.nome}
                   </h3>
                   <Button
                      variant="outlined"
@@ -59,3 +64,4 @@ export default function PaginaSaposAfrica(props){
       </>
    )
 }
+export default connect((state)=>({usuario:state}))(PaginaSaposAfrica)

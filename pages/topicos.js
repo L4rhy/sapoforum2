@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import Layout from "../layouts/layout";
-import React from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import { Stack } from "@mui/material";
 import Button from "@mui/material/Button";
@@ -8,11 +8,11 @@ import { useRouter } from "next/router";
 import appConfig from "../config.json";
 import { Grid } from "@mui/material";
 import { Image } from "@mui/icons-material";
-import { firebase, auth } from "../../SapoForum/pages/firebase/firebase";
-
-export default function Topicos(props) {
+import { firebase } from "../../SapoForum/pages/firebase/firebase";
+import { connect } from "react-redux";
+const Topicos = (usuario) => {
    const roteamento = useRouter();
-   console.log(props.usuario);
+   
    const handleSaposAfrica = ()=>{
       roteamento.push("/saposAfrica")
    }
@@ -41,7 +41,11 @@ export default function Topicos(props) {
       firebase.auth().signOut()
       roteamento.push("/")
    }
-
+   useEffect(()=>{
+      if(usuario.estado==false){
+         handleLogout
+      }
+   })
    return (
       <>
          <Head>
@@ -67,10 +71,10 @@ export default function Topicos(props) {
                   <Image
                      width="16px"
                      height="16px"
-                     src={props.usuario.avatar}
+                     src={usuario.avatar}
                   />
                   <h3>
-                     {props.usuario.nome}
+                     {usuario.nome}
                   </h3>
                   <Button
                      variant="outlined"
@@ -140,3 +144,4 @@ export default function Topicos(props) {
       </>
    );
 }
+export default connect((state)=>({usuario:state}))(Topicos);
