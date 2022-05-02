@@ -1,16 +1,18 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Layout from "../layouts/layout";
 import Head from "next/head";
 import Stack from "@mui/material/Stack"
 import  Grid from "@mui/material/Grid";
-import Image, { Button } from "@mui/material"
+import Image, { Button, TextField } from "@mui/material"
 import useRouter from "next/router"
 import { firebase } from "../../SapoForum/pages/firebase/firebase";
 import appConfig from "../config.json"
 import connect from "react-redux"
+import { TextFields } from "@mui/icons-material";
 
 const PaginaSaposAfrica = (usuario) => {
-   
+   const [titulo, setTitulo]=useState()
+   const [texto, setTexto]=useState()
    const roteamento = useRouter()
    
    const handleLogout = ()=>{
@@ -58,6 +60,20 @@ const PaginaSaposAfrica = (usuario) => {
                   >
                      Logout                     
                   </Button>
+               </Grid>
+               <Grid>
+                  <TextField
+                     id="titulo"
+                     label="Insira o Titulo da postagem"
+                     variant="filled"
+                     margin="normal"
+                     value={titulo}
+                     onChange={(event) => {
+                        const valor = event.target.value;
+                        setTitulo(valor);
+                     }}
+                  />
+                  <TextField/>
                </Grid>
             </Stack>
          </Layout>

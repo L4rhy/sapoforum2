@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Layout from "../layouts/layout";
@@ -80,12 +79,12 @@ const PaginaInicial = ({usuario, dispatch}) => {
          <Layout>
             <Stack
                position="static"
-               justifyContent="space-between"
+               justifyContent="flex-end"
                alignItems=""
                direction="column"
                sx={{
                   width: "70vw",
-                  height: "50vh",
+                  height: "60vh",
                   borderRadius: "5px",
                   boxShadow: "0 2px 10px 0 rgb(0 0 0 / 20%)",
                   backgroundColor: appConfig.theme.colors.neutrals["500"],

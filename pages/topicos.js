@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import Layout from "../layouts/layout";
 import React, { useEffect } from "react";
 import Head from "next/head";
