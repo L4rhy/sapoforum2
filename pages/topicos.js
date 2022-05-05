@@ -5,7 +5,6 @@ import { Stack } from "@mui/material";
 import Button from "@mui/material/Button";
 import { useRouter } from "next/router";
 import appConfig from "../config.json";
-import { Grid } from "@mui/material";
 import { Image } from "@mui/icons-material";
 import { firebase } from "../service/firebase";
 import { connect } from "react-redux";
@@ -66,7 +65,7 @@ const Topicos = (usuario) => {
                   backgroundColor: appConfig.theme.colors.neutrals["500"],
                }}
             >
-               <Grid>
+               <Stack>
                   <Image
                      width="16px"
                      height="16px"
@@ -81,7 +80,7 @@ const Topicos = (usuario) => {
                   >
                      Logout
                   </Button>
-               </Grid>
+               </Stack>
                <Button 
                   variant="contained"
                   color="secondary" 

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Grid from "@mui/material/Grid";
 import Layout from "../layouts/layout";
 import TextField from "@mui/material/TextField";
 import appConfig from "../config.json";
@@ -91,7 +90,7 @@ const PaginaInicial = ({usuario, dispatch}) => {
                }}
             >
                <Stack direction="row" alignItems="center">
-                  <Grid
+                  <Stack
                      container
                      direction="column"
                      justifyContent="center"
@@ -126,8 +125,8 @@ const PaginaInicial = ({usuario, dispatch}) => {
                      <Button variant="outlined" onClick={handleLogin}>
                         Login
                      </Button>
-                  </Grid>
-                  <Grid
+                  </Stack>
+                  <Stack
                      container
                      margin="2%"
                      direction="column"
@@ -175,7 +174,7 @@ const PaginaInicial = ({usuario, dispatch}) => {
                      <Button variant="outlined" onClick={handleCadastro}>
                         Cadastro
                      </Button>
-                  </Grid>
+                  </Stack>
                </Stack>
                <BottomNavigation
                   sx={{

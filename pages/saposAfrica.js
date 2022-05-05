@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import Layout from "../layouts/layout";
 import Head from "next/head";
 import Stack from "@mui/material/Stack"
-import  Grid from "@mui/material/Grid";
 import Image, { Button, TextField } from "@mui/material"
 import useRouter from "next/router"
 import { firebase } from "../service/firebase";
@@ -42,7 +41,7 @@ const PaginaSaposAfrica = (usuario) => {
                   backgroundColor: appConfig.theme.colors.neutrals["500"],
                }}
             >
-               <Grid>
+               <Stack>
                   <Image
                      width="16px"
                      height="16px"
@@ -59,8 +58,8 @@ const PaginaSaposAfrica = (usuario) => {
                   >
                      Logout                     
                   </Button>
-               </Grid>
-               <Grid>
+               </Stack>
+               <Stack>
                   <TextField
                      id="titulo"
                      label="Insira o Titulo da postagem"
@@ -83,7 +82,7 @@ const PaginaSaposAfrica = (usuario) => {
                         setTexto(valor);
                      }}
                   />
-               </Grid>
+               </Stack>
             </Stack>
          </Layout>
       </>
