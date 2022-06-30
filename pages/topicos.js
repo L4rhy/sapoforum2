@@ -1,4 +1,4 @@
-import Layout from "../layouts/layout";
+import Layout from "../layout/"
 import React, { useEffect } from "react";
 import Head from "next/head";
 import { Stack } from "@mui/material";
@@ -6,8 +6,9 @@ import Button from "@mui/material/Button";
 import { useRouter } from "next/router";
 import appConfig from "../config.json";
 import { Image } from "@mui/icons-material";
-import { firebase } from "../service/firebase";
 import { connect } from "react-redux";
+import { signOut } from "firebase/auth"
+import { app } from "../service/firebase"
 const Topicos = (usuario) => {
    const roteamento = useRouter();
    
@@ -36,7 +37,7 @@ const Topicos = (usuario) => {
       roteamento.push("/saposSuper")
    }
    const handleLogout = ()=>{
-      firebase.auth().signOut()
+      signOut()
       roteamento.push("/")
    }
    useEffect(()=>{

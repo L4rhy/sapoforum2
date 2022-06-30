@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import Layout from "../layouts/layout";
+import Layout from "../layouts/";
 import Head from "next/head";
 import Stack from "@mui/material/Stack"
 import Image, { Button, TextField } from "@mui/material"

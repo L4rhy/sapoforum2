@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Layout from "../layouts/layout";
+import Layout from "../layout/";
 import TextField from "@mui/material/TextField";
 import appConfig from "../config.json";
 import Head from "next/head";
@@ -9,9 +9,12 @@ import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import { firebase, auth } from "../service/firebase";
+// eslint-disable-next-line no-unused-vars
+import { app } from "../service/firebase";
 import { useRouter } from "next/router";
 import { connect } from "react-redux";
+import { GithubAuthProvider, GoogleAuthProvider, getAuth,  signInWithPopup, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+
 
 const PaginaInicial = ({usuario, dispatch}) => {
    const [email, setEmail] = useState();
@@ -20,32 +23,34 @@ const PaginaInicial = ({usuario, dispatch}) => {
    const [emailCadastro, setEmailCadastro] = useState();
    const [senhaCadastro, setSenhaCadastro] = useState();
    const roteamento = useRouter();
+   const auth = getAuth();
+   
    const handleLogin = async () => {
-      firebase.auth().signInWithEmailAndPassword(email, senha);
+      signInWithEmailAndPassword(email, senha);
+      login()
    };
    const handleCadastro = async () => {
-      firebase
-         .auth()
-         .createUserWithEmailAndPassword(emailCadastro, senhaCadastro);
+      createUserWithEmailAndPassword(emailCadastro, senhaCadastro);
 
-      firebase.auth().signInWithEmailAndPassword(emailCadastro, senhaCadastro);
+      signInWithEmailAndPassword(emailCadastro, senhaCadastro);
 
-      const user = firebase.auth().currentUser;
+      const user = auth.currentUser;
       user.updateProfile({
          displayName: nomeCadrastro,
          photoURL:
-            "https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn.pixabay.com%2Fphoto%2F2015%2F10%2F05%2F22%2F37%2Fblank-profile-picture-973460_640.png&imgrefurl=https%3A%2F%2Fpixabay.com%2Fpt%2Fvectors%2Ffoto-de-perfil-em-branco-973460%2F&tbnid=ScRGRFGMiXHWfM&vet=12ahUKEwjs67_FtrL3AhUTMLkGHaAmDn0QMygAegQIARBG..i&docid=CaqOTE768pk6hM&w=640&h=640&q=foto%20usuario%20vazia&client=opera-gx&ved=2ahUKEwjs67_FtrL3AhUTMLkGHaAmDn0QMygAegQIARBG",
+         "https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn.pixabay.com%2Fphoto%2F2015%2F10%2F05%2F22%2F37%2Fblank-profile-picture-973460_640.png&imgrefurl=https%3A%2F%2Fpixabay.com%2Fpt%2Fvectors%2Ffoto-de-perfil-em-branco-973460%2F&tbnid=ScRGRFGMiXHWfM&vet=12ahUKEwjs67_FtrL3AhUTMLkGHaAmDn0QMygAegQIARBG..i&docid=CaqOTE768pk6hM&w=640&h=640&q=foto%20usuario%20vazia&client=opera-gx&ved=2ahUKEwjs67_FtrL3AhUTMLkGHaAmDn0QMygAegQIARBG",
       });
+      login()
    };
    const handleGoogle = async () => {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      // eslint-disable-next-line no-unused-vars
-      const result = await auth.signInWithPopup(provider);
+      const provider = new GoogleAuthProvider();
+      signInWithPopup(auth, provider);
+      login()
    };
    const handleGit = async () => {
-      const provider = new firebase.auth.GithubAuthProvider();
-      // eslint-disable-next-line no-unused-vars
-      const result = await auth.signInWithPopup(provider);
+      const provider = new GithubAuthProvider();
+      signInWithPopup(auth, provider);
+      login()
    };
 
    const atualizarUsuario = (nome, avatar, estado) => {
@@ -56,9 +61,8 @@ const PaginaInicial = ({usuario, dispatch}) => {
          estado,
       };
    };
-
-   useEffect(() => {
-      firebase.auth().onAuthStateChanged((user) => {
+   const login = () =>{
+      onAuthStateChanged(auth,(user) => {
          if (user) {
             const { displayName, photoURL } = user;
             console.log(usuario);
@@ -67,8 +71,7 @@ const PaginaInicial = ({usuario, dispatch}) => {
             roteamento.push("/topicos");
          }
       });
-   });
-
+   }
    return (
       <>
          <Head>
@@ -89,9 +92,13 @@ const PaginaInicial = ({usuario, dispatch}) => {
                   backgroundColor: appConfig.theme.colors.neutrals["500"],
                }}
             >
-               <Stack direction="row" alignItems="center">
+               <Stack 
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center"
+               >
                   <Stack
-                     container
+                     container="true"
                      direction="column"
                      justifyContent="center"
                      alignItems="center"
@@ -127,7 +134,7 @@ const PaginaInicial = ({usuario, dispatch}) => {
                      </Button>
                   </Stack>
                   <Stack
-                     container
+                     container="true"
                      margin="2%"
                      direction="column"
                      justifyContent="center"
